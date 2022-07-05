@@ -6,9 +6,9 @@
       <p class="text-left flex-auto text-2xl font-bold">
         Todo List App for newbie
       </p>
-      <a-button class="btn-add" type="primary" @click="showModal">
+      <button class="btn-add" type="primary" @click="showModal">
         Add New Task
-      </a-button>
+      </button>
       <a-modal
         v-model:visible="visible"
         title="Insert tasks information"
@@ -23,6 +23,26 @@
 
         <div class="text-xl font-bold">Status</div>
         <a-input class="input" v-model:value="statusTodo" id="new-statusTodo" />
+      </a-modal>
+
+      <a-modal
+        v-model:visible="visibleModalEdit"
+        title="Edit tasks information"
+        @ok="editOk"
+        class=""
+      >
+        <div class="text-xl font-bold">ID</div>
+        <a-input class="input" v-model:value="idTodoedit" />
+
+        <div class="text-xl font-bold">Task Name</div>
+        <a-input class="input" v-model:value="nameTodoedit" id="new-nameTodo" />
+
+        <div class="text-xl font-bold">Status</div>
+        <a-input
+          class="input"
+          v-model:value="statusTodoedit"
+          id="new-statusTodo"
+        />
       </a-modal>
     </div>
 
@@ -40,7 +60,7 @@
       :id="todo.id"
       :name="todo.name"
       :status="todo.status"
-      
+      @edit="(id: string) => showEdit(id)"
       @delete="todos.splice(index, 1)"
     />
   </div>
@@ -58,6 +78,8 @@ const todos = ref([
 ]);
 
 const visible = ref<boolean>(false);
+const visibleModalEdit = ref<boolean>(false);
+const idToEdit = ref<string>("");
 
 const showModal = () => {
   visible.value = true;
@@ -67,9 +89,22 @@ const showModal = () => {
   statusTodo.value = "";
 };
 
+const showEdit = (id: string) => {
+  idToEdit.value = id;
+  visibleModalEdit.value = true;
+};
+
+const editOk = (e: any) => {
+  console.log(e);
+  visibleModalEdit.value = false;
+
+  editTask();
+};
+
 const handleOk = (e: any) => {
   console.log(e);
   visible.value = false;
+  visibleModalEdit.value = false;
 
   addNew();
 };
@@ -78,24 +113,48 @@ const nameTodo = ref("");
 const statusTodo = ref("");
 const idTodo = ref("");
 
-function addNew() {
-  console.log(1111);
+const nameTodoedit = ref("");
+const statusTodoedit = ref("");
+const idTodoedit = ref("");
 
+function addNew() {
   todos.value.push({
     id: idTodo.value,
     name: nameTodo.value,
     status: statusTodo.value,
   });
-  // nameTodo.value = "";
-  // statusTodo.value = "";
+}
+
+function editTask() {
+  for (let i = 0; i < todos.value.length; i++) {
+    const element = todos.value[i];
+
+    if (element.id === idToEdit.value) {
+      element.id = idTodoedit.value;
+      element.name = nameTodoedit.value;
+      element.status = statusTodoedit.value;
+    }
+  }
+  // todos.value.push({
+  //   id: idTodoedit.value,
+  //   name: nameTodoedit.value,
+  //   status: statusTodoedit.value,
+  // });
 }
 </script>
 
 <style>
 .btn-add {
-  background-image: linear-gradient(to right, blue, rgb(0, 255, 157));
+  background-image: linear-gradient(
+    to right,
+    rgb(44, 44, 243),
+    rgb(72, 199, 151)
+  );
   font-size: 18px;
   font-weight: 400;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 5px;
 }
 
 .input {
@@ -109,3 +168,4 @@ function addNew() {
   padding-block: 5px;
 }
 </style>
+vbas

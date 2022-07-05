@@ -4,8 +4,8 @@
     <p class="flex-1">{{ name }}</p>
     <p class="flex-1">{{ status }}</p>
     <button
-      @click="$emit('edit')"
-      class="flex-1 bg-yellow-500 text-center text-black rounded-md"
+      @click="$emit('edit', id)"
+      class="flex-1 !bg-yellow-500 text-center text-black rounded-md"
     >
       Edit
     </button>
@@ -29,6 +29,10 @@ defineProps({
   },
   status: {
     type: String,
+  },
+
+  showModaltask: {
+    type: Function,
   },
 });
 

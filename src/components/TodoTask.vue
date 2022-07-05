@@ -5,14 +5,14 @@
     <p class="flex-1">{{ status }}</p>
     <button
       @click="$emit('edit', id)"
-      class="flex-1 !bg-yellow-500 text-center text-black rounded-md"
+      class="flex-1 !bg-yellow-500 text-center text-black rounded-md m-0.5"
     >
       Edit
     </button>
 
     <button
       @click="$emit('delete')"
-      class="flex-1 bg-red-500 text-center text-black rounded-md"
+      class="flex-1 bg-red-500 text-center text-black rounded-md m-0.5"
     >
       Delete
     </button>
